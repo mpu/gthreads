@@ -23,15 +23,13 @@ struct gt {
 		Unused,
 		Running,
 		Ready,
-		Zombie,
 	} st;
-	int excode;
 };
 
 struct gt gttbl[MaxGThreads];
 struct gt *gtcur;
-bool gttick;
 
+void gtinit(void);
 void gtret(int ret);
 void gtswtch(struct gtctx *old, struct gtctx *new);
 bool gtyield(bool force);
@@ -49,8 +47,7 @@ void __attribute__((noreturn))
 gtret(int ret)
 {
 	if (gtcur != &gttbl[0]) {
-		gtcur->st = Zombie;
-		gtcur->excode = ret;
+		gtcur->st = Unused;
 		gtyield(true);
 		assert(!"reachable");
 	}
@@ -65,9 +62,6 @@ gtyield(bool force)
 	struct gt *p;
 	struct gtctx *old, *new;
 
-	if (!gttick && !force)
-		return false;
-	gttick = 0;
 	p = gtcur;
 	while (p->st != Ready) {
 		if (++p == &gttbl[MaxGThreads])
@@ -76,7 +70,7 @@ gtyield(bool force)
 			return false;
 	}
 
-	if (gtcur->st != Zombie)
+	if (gtcur->st != Unused)
 		gtcur->st = Ready;
 	p->st = Running;
 	old = &gtcur->ctx;
@@ -114,7 +108,7 @@ gtgo(void (*f)(void))
 }
 
 
-/* Now we test this nice library. */
+/* Now, let's run some simple threaded code. */
 
 void
 f(void)
