@@ -1,6 +1,6 @@
 CFLAGS = -g -Wall
 
-gttest: gthr.o swtch.o
+gttest: gthr.o gtswtch.o
 	$(CC) -o $@ $^
 
 .S.o:
