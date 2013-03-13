@@ -32,7 +32,7 @@ struct gt *gtcur;
 void gtinit(void);
 void gtret(int ret);
 void gtswtch(struct gtctx *old, struct gtctx *new);
-bool gtyield(bool force);
+bool gtyield(void);
 static void gtstop(void);
 int gtgo(void (*f)(void));
 
@@ -48,16 +48,16 @@ gtret(int ret)
 {
 	if (gtcur != &gttbl[0]) {
 		gtcur->st = Unused;
-		gtyield(true);
+		gtyield();
 		assert(!"reachable");
 	}
-	while (gtyield(true))
+	while (gtyield())
 		;
 	exit(ret);
 }
 
 bool
-gtyield(bool force)
+gtyield(void)
 {
 	struct gt *p;
 	struct gtctx *old, *new;
@@ -119,7 +119,7 @@ f(void)
 	id = ++x;
 	for (i = 0; i < 10; i++) {
 		printf("%d %d\n", id, i);
-		gtyield(true);
+		gtyield();
 	}
 }
 
