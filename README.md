@@ -7,9 +7,16 @@ This repository contains code described in the green threads
 
 This tutorial is structured in different parts, each part
 describing actual code is related to a branch in this
-repository.
+repository. Branches named codeN correspond the
+corresponding "Code N" part of the tutorial.
 
-Branches of the form codeN correspond the "Code N" part of
-the tutorial.
+## Bugs
+
+If you find any bug or any wart in the code, I will be glad
+to have a pull request or an issue from you.
+
+## Legal matter
+
+Everything I wrote here is in the public domain.
 
 Happy hacking!
