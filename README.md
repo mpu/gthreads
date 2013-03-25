@@ -7,7 +7,7 @@ This repository contains code described in the green threads
 
 This tutorial is structured in different parts, each part
 describing actual code is related to a branch in this
-repository. Branches named codeN correspond the
+repository. Branches named codeN contain the code for the
 corresponding "Code N" part of the tutorial.
 
 ## Bugs
