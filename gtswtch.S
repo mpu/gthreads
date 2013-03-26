@@ -5,8 +5,8 @@
 #   %rsi contains the context to switch to.
 #
 
-.code64
-.globl gtswtch
+.globl _gtswtch, gtswtch
+_gtswtch:
 gtswtch:
 
         mov     %rsp, 0x00(%rdi)
